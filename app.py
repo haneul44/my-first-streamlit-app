@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 st.set_page_config(page_title="Haneul's Streamlit App", layout="centered")
-st.title("HANEUL'S Streamlit App")
+st.title("HANEUL'S Streamlit App!!!!!!")
 st.write("This app is built with Streamlit!")
 # Display data
 st.header("A tiny dataset")
