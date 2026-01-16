@@ -23,7 +23,7 @@ coffee_color_map = {
     'Latte': '#C2A878',
     'Hot Chocolate': '#3B2416',
     'Americano': '#6F4E37',
-    'Americano With Milk': '#8B5A2B',
+    'Americano with Milk': '#8B5A2B',
     'Cocoa': '#9C6B4F',
     'Cortado': '#D2B48C',
     'Espresso': '#4B2E1E',
