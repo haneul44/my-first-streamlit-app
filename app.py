@@ -23,7 +23,7 @@ coffee_color_map = {
     'Latte': '#C2A878',
     'Hot Chocolate': '#3B2416',
     'Americano': '#6F4E37',
-    'Americano with Milk': '#8B5A2B',
+    'Americano With Milk': '#8B5A2B',
     'Cocoa': '#9C6B4F',
     'Cortado': '#D2B48C',
     'Espresso': '#4B2E1E',
@@ -51,18 +51,25 @@ def month_to_season(month: int) -> str:
 @st.cache_data
 def load_data(path: str) -> pd.DataFrame:
     df = pd.read_csv(path)
-    # Date 처리
-    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
-    # Weekday 만들기 (혹시 이미 있어도 덮어씀)
+
+    # Date 처리 (노트북과 최대한 동일하게)
+    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')  # 필요하면 format='%Y-%m-%d'로 고정해도 됨
+
+    # ✅ 노트북과 동일: 문자열 정규화
+    df['coffee_name'] = df['coffee_name'].astype(str).str.strip().str.title()
+    if 'cash_type' in df.columns:
+        df['cash_type'] = df['cash_type'].astype(str).str.strip().str.title()
+
+    # Weekday
     df['Weekday'] = df['Date'].dt.day_name()
-    # Season 만들기 (Monthsort가 있는 데이터셋 기준)
+
+    # Season
     if 'Season' not in df.columns:
         df['Season'] = df['Monthsort'].apply(month_to_season)
 
-    # 문자열 정리(안전하게)
-    df['coffee_name'] = df['coffee_name'].astype(str).str.strip()
-    if 'cash_type' in df.columns:
-        df['cash_type'] = df['cash_type'].astype(str).str.strip()
+    # ✅ 노트북과 동일: 순서 고정 (그래프/피벗 안 꼬이게)
+    df['Weekday'] = pd.Categorical(df['Weekday'], categories=weekday_order, ordered=True)
+    df['Season'] = pd.Categorical(df['Season'], categories=season_order, ordered=True)
 
     return df
 
