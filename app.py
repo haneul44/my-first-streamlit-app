@@ -128,7 +128,7 @@ def donut_by_two_seasons(df: pd.DataFrame, season_a: str, season_b: str, metric:
 # -----------------------------
 st.sidebar.header("Controls")
 
-data_path = st.sidebar.text_input("CSV path", value="../data/Coffe_sales.csv")
+data_path = st.sidebar.text_input("CSV path", value="Coffe_sales.csv")
 coffee = load_data(data_path)
 
 metric_toggle = st.sidebar.radio(
