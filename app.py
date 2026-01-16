@@ -15,7 +15,7 @@ st.caption("Exploratory analysis of coffee sales data")
 
 @st.cache_data
 def load_data():
-    return pd.read_csv("Coffee_sales.csv")
+    return pd.read_csv("Coffe_sales.csv")
 
 coffee = load_data()
 
