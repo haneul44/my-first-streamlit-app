@@ -310,15 +310,37 @@ fig = px.bar(
 fig.update_layout(xaxis_title="Weekday", yaxis_title="Average Sales per Day")
 st.plotly_chart(fig, use_container_width=True)
 
+coffee_gradient = [
+    '#F5EFE6',  # very light latte
+    '#E6D3B1',
+    '#D2B48C',
+    '#B08968',
+    '#8B5A2B',
+    '#6F4E37',
+    '#4B2E1E'   # dark roast
+]
+
 # -----------------------------
 # Q7: Weekday x Season (Revenue/Volume toggle)
 # -----------------------------
 st.subheader("Q7. Sales/Revenue by Weekday × Season")
 
 if metric_toggle == "Revenue":
-    pivot = pd.pivot_table(coffee, values='money', index='Season', columns='Weekday', aggfunc='sum')
+    pivot = pd.pivot_table(
+        coffee,
+        values='money',
+        index='Season',
+        columns='Weekday',
+        aggfunc='sum'
+    )
 else:
-    pivot = pd.pivot_table(coffee, values='coffee_name', index='Season', columns='Weekday', aggfunc='count')
+    pivot = pd.pivot_table(
+        coffee,
+        values='coffee_name',
+        index='Season',
+        columns='Weekday',
+        aggfunc='count'
+    )
 
 pivot = pivot.reindex(season_order)
 pivot = pivot[weekday_order]
@@ -329,8 +351,9 @@ fig = px.imshow(
     aspect="auto",
     template="plotly_white",
     title=f"{metric_label(metric_toggle)} Heatmap (Season × Weekday)",
-    color_continuous_scale="YlOrBr"
+    color_continuous_scale=coffee_gradient
 )
+
 st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------
