@@ -28,6 +28,10 @@ import plotly.express as px
 import plotly.io as pio
 import plotly.graph_objects as go
 
+coffee['coffee_name'] = coffee['coffee_name'].str.strip().str.title()
+coffee['cash_type'] = coffee['cash_type'].str.strip().str.title()
+coffee['Date'] = pd.to_datetime(coffee['Date'], format='%Y-%m-%d')
+
 #Set color paltte
 coffee_color_map = {
     'Americano': '#6F4E37',            # Espresso brown
