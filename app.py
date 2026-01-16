@@ -190,29 +190,30 @@ with col1:
     st.plotly_chart(fig, use_container_width=True)
 
 with col2:
-    st.markdown(f"**Highest month:** `{max_month}`")
-    # 최고 월에서 커피별 기여(도넛)
-    df_max = coffee[coffee['Month_name'] == max_month].copy()
+    st.markdown("**Overall share (entire period)**")
 
+    # ✅ 전체 기간에서 커피별 기여(도넛)
     if metric_toggle == "Revenue":
-        share = df_max.groupby('coffee_name', as_index=False)['money'].sum()
+        share = coffee.groupby('coffee_name', as_index=False)['money'].sum()
         v = 'money'
     else:
-        share = df_max.groupby('coffee_name').size().reset_index(name='sales_count')
+        share = coffee.groupby('coffee_name').size().reset_index(name='sales_count')
         v = 'sales_count'
 
     share = share.sort_values(v, ascending=False)
+
     fig2 = px.pie(
         share,
         names='coffee_name',
         values=v,
         hole=0.45,
         template='plotly_white',
-        title=f"{metric_label(metric_toggle)} share by coffee ({max_month})",
+        title=f"{metric_label(metric_toggle)} share by coffee (Overall)",
         color='coffee_name',
         color_discrete_map=coffee_color_map
     )
-    fig2.update_traces(textinfo='percent+label', marker=dict(line=dict(color='white', width=1)))
+    fig2.update_traces(textinfo='percent+label',
+                       marker=dict(line=dict(color='white', width=1)))
     st.plotly_chart(fig2, use_container_width=True)
 
 # -----------------------------
